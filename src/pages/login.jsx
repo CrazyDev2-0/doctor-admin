@@ -1,10 +1,14 @@
 import React, { useRef } from "react";
 import logo from "../assets/logo.jpg";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 //  Completely built on custom CSS
 // To modify check _loginPage.scss
 
+const BASEURL = 'https://d2a6-103-171-246-169.in.ngrok.io';
 const LoginPage = () => {
+  const navigate = useNavigate();
   // Login form state
   const formRef = useRef({
     email: "",
@@ -13,8 +17,26 @@ const LoginPage = () => {
 
 
   // Handle login form submit
-  function handleSubmit() {
-
+  async function handleSubmit() {
+    const data = await axios({
+      method: 'post',
+      url: `${BASEURL}/auth/login-doctor`,
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data : JSON.stringify({
+        "email": formRef.current.email
+      })
+    });
+    // console.log(data.data.code);
+    if(data.data.code === 200)  {   
+      localStorage.setItem('token', data.data.payload.token);
+      localStorage.setItem('profile', JSON.stringify(data.data.payload));
+      window.location.href="/";
+      // navigate("/", {replace: true});
+    }else {
+      console.log("Incorrect Login Credentials");
+    }
   }
 
 

@@ -1,0 +1,27 @@
+ 81 await prisma.$transaction(
+  82   async (tx) => {
+  83     // Create monitoring
+→ 84     let monitoring = await tx.personalizedMonitoring.create({
+           data: {
+             name: 'adwad',
+             description: 'dawdadadw',
+             doctorId: 'cl9g4vlyo00003azcrbq04hts',
+             userId: 'cl9fgjyff00003a2jvgmoe7qi',
+             assigneeType: 'doctor',
+             intervalSeconds: 20,
+             isPredictionModelAssigned: true,
+             predictionModelId: 'cl9gtfuyx000g3ac4j7e9a9gn',
+             isMonitorStepCount: true,
+             isMonitorCalorieCount: false,
+             minStepCount: 69,
+             minCalorieCount: null,
+                              ~~~~
+             isLive: true,
+             registeredOn: 1666466290614
+           },
+           select: {
+             id: true
+           }
+         })
+
+Argument minCalorieCount for data.minCalorieCount must not be null. Please use undefined instead.

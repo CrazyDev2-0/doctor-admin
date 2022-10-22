@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import {
   Chart as ChartJS,
@@ -24,6 +24,7 @@ import AlertBar from './components/alertbar';
 import PatientStatsPage from './pages/patientStats';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const user = JSON.parse(localStorage.getItem('profile'));
 
 ChartJS.register(
   CategoryScale,
@@ -36,17 +37,17 @@ ChartJS.register(
 );
 
 root.render(
-  <React.StrictMode>
-    {/* <ChakraProvider>
+  localStorage.getItem('token') === null || localStorage.getItem('token') === undefined ? <React.StrictMode>
+    <ChakraProvider>
       <BrowserRouter>
         <Routes>
-        <Route path="/login" element={<LoginPage />} replace />
-        <Route path="/patients" element={<PatientListPage />} replace />          
+        <Route path="/*" element={<LoginPage />} replace />
         </Routes>
       </BrowserRouter>
-    </ChakraProvider> */}
-  {/* </React.StrictMode>
-  <React.StrictMode> */}
+    </ChakraProvider>
+  </React.StrictMode> 
+  :
+  <React.StrictMode>
     <ChakraProvider>
       <div className="dashboardContainer">
         <BrowserRouter>
@@ -56,7 +57,8 @@ root.render(
           <div className="containerContent">
             <Routes>
             <Route path="/" element={<PatientListPage />} />
-            <Route path="/stat" element={<PatientStatsPage />} />
+            <Route path="/patients/:id" element={<PatientStatsPage />} />
+            <Route path="/auth" element={ user?.result ? <Navigate replace to="/" /> : <LoginPage /> } />
             </Routes>
           </div>
         </BrowserRouter>

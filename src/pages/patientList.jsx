@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
+
 
 import {
   Table,
@@ -15,13 +17,18 @@ import {
 } from "@chakra-ui/react";
 import PatientSearchModal from "../components/patientSearchModal";
 import PatientAccessRequestModal from "../components/patientAccessRequest";
+import { useNavigate } from "react-router-dom";
 
 const PatientListPage = () => {
+  const BASEURL = 'https://d2a6-103-171-246-169.in.ngrok.io';
+
+  const navigate = useNavigate();
   const modalUseDisclosureForSearchModal = useDisclosure();
   const modalUseDisclosureForNewPatientModal = useDisclosure();
 
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [totalPages, setTotalPages] = React.useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(5);
+  const [patients, setPatients] = useState([]);
 
   const formRef = React.useRef({
     patientName: "",
@@ -37,7 +44,21 @@ const PatientListPage = () => {
     // setCurrentPage(studentDatabaseManage.current.currentPage);
   }
 
-  useEffect(() => {}, []);
+  const getall = async () => {
+    const data = await axios({
+        method: 'get',
+        url: `${BASEURL}/doctor/patients/all`,
+        headers: { 
+            'authorization': localStorage.getItem('token')
+          }
+    });
+    // console.log(data.data.payload)
+    // console.log(data.data.payload[0].id)
+    setPatients(data.data.payload);
+    console.log(data.data.payload);
+  } 
+
+  useEffect(() => { getall() }, []);
 
   return (
     <>
@@ -83,22 +104,26 @@ const PatientListPage = () => {
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>20104589631</Td>
-                <Td>Rahul Dey</Td>
-                <Td>18</Td>
-                <Td>F</Td>
-                <Td>
-                  <Button size="xs" colorScheme="teal">
-                    tstest@test.com
-                  </Button>
-                </Td>
-                <Td>
-                  <Button size="xs" colorScheme="teal">
-                    View Stats
-                  </Button>
-                </Td>
-              </Tr>
+              {
+                patients.map(patient => 
+                <Tr key= {patient.id}>
+                  <Td>{patient.id}</Td>
+                  <Td>{patient.name}</Td>
+                  <Td>{patient.profile.age}</Td>
+                  <Td>{patient.profile.gender}</Td>
+                  <Td>
+                    <Button size="xs" colorScheme="teal">
+                      {patient.email}
+                    </Button>
+                  </Td>
+                  <Td>
+                    <Button size="xs" colorScheme="teal" onClick={() => {navigate(`/patients/${patient.id}`, {replace: false});}}>
+                      View Stats
+                    </Button>
+                  </Td>
+                </Tr>)
+              }
+              
             </Tbody>
           </Table>
         </TableContainer>
