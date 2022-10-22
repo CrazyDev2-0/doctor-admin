@@ -27,7 +27,7 @@ const PatientStatsPage = () => {
   const BASEURL = 'https://d2a6-103-171-246-169.in.ngrok.io';
   const modalUseDisclosureForSetupPersonalizeMonitoring = useDisclosure();
 
-  let vitalInfo = JSON.parse(localStorage.getItem('vitalInfo'));
+  const [vitalInfo, setVitalInfo] = useState([]);
   const [patient, setPatient] = useState({})
   const { id } = useParams();
   const functionCallbackRef = useRef({
@@ -49,6 +49,11 @@ const PatientStatsPage = () => {
   } 
 
   const getVitalInfo = async () => {
+    var tmp = JSON.parse(localStorage.getItem('vitalInfo'));
+    if(tmp != null){
+      setVitalInfo(tmp);
+      return;
+    }
     const data = await axios({
         method: 'get',
         url: `${BASEURL}/doctor/vitals/info`,
@@ -59,7 +64,7 @@ const PatientStatsPage = () => {
     // console.log(id);
     console.log(data.data.payload);    
     localStorage.setItem('vitalInfo', JSON.stringify(data.data.payload));
-    vitalInfo = data.data.payload;
+    setVitalInfo(data.data.payload);
   } 
 
   const refreshVitals = async()=>{
@@ -70,10 +75,13 @@ const PatientStatsPage = () => {
     }
   }
 
+
   useEffect(() => { 
-    if(vitalInfo === null)    {
-      getVitalInfo(); 
-    }
+    document.showLoadingScreen();
+    getVitalInfo()
+    .finally(()=>{
+      document.hideLoadingScreen();
+    })
     // console.log("VINFO",vitalInfo);
   }, []);
 
@@ -110,12 +118,17 @@ const PatientStatsPage = () => {
             </Button>
           </HStack>
         </div>
-        <div className="content">
-          <Drawchart vital = {vitalInfo[0]} functionRef={functionCallbackRef} />
-          <Drawchart vital = {vitalInfo[3]} functionRef={functionCallbackRef}/>
-          <Drawchart vital = {vitalInfo[4]} functionRef={functionCallbackRef}/>
-          <Drawchart vital = {vitalInfo[3]} functionRef={functionCallbackRef}/>
-        </div>
+        {
+            vitalInfo.length > 0 ? 
+            <div className="content">
+              <Drawchart vital = {vitalInfo[0]} functionRef={functionCallbackRef} />
+              <Drawchart vital = {vitalInfo[3]} functionRef={functionCallbackRef}/>
+              <Drawchart vital = {vitalInfo[4]} functionRef={functionCallbackRef}/>
+              <Drawchart vital = {vitalInfo[3]} functionRef={functionCallbackRef}/>
+            </div>
+            : ""
+          }
+
       </div>
     </>
   );

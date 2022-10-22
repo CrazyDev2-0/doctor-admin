@@ -16,11 +16,12 @@ const TopBar = () => {
   return (
     <>
       <div className="topBar">
-        <IconButton
+        {/* <IconButton
           aria-label="Open navbar"
           onClick={() => document.openNavbar()}
           icon={<FontAwesomeIcon icon={faBars} fontSize="20" />}
-        />
+        /> */}
+        <a></a>
 
         <NavLink to="/">      
           <div className="branding">

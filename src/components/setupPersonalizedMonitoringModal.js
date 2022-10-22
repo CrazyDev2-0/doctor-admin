@@ -18,7 +18,7 @@ import {
   Text
 } from "@chakra-ui/react";
 
-import swal from 'sweetalert';
+import Swal from "sweetalert2";
 
 const BASEURL = 'https://d2a6-103-171-246-169.in.ngrok.io';
 
@@ -129,16 +129,17 @@ const SetupPersonalizedMonitoringModal = ({ patientId, disclosure }) => {
           data: JSON.stringify(tmpdata)
       });
       let resJSon = res.data;
-      console.log(resJSon);
+      disclosure.onClose();
       document.hideLoadingScreen()
-      // swal.fire(
-      //   resJSon.success ? "Successfully Assigned " : "Error",
-      //   resJSon.message,
-      //   resJSon.success ? 'success' : "error"
-      // )
+      Swal.fire(
+        resJSon.success ? "Successfully Assigned " : "Error",
+        resJSon.message,
+        resJSon.success ? 'success' : "error"
+      )
       
     } catch (error) {
       console.log(error);
+      document.hideLoadingScreen();
     }
   }
 
@@ -211,7 +212,7 @@ const SetupPersonalizedMonitoringModal = ({ patientId, disclosure }) => {
               <Checkbox colorScheme="green" mr="auto" value={elem.isNegativeThreshold} onChange={(e)=>configuredVitals[i].isNegativeThreshold=e.target.checked}>Negative</Checkbox>
             </HStack>
           )}
-          <Button onClick={addNewVitalThreshold}>Add new vital</Button>
+          <Button mt={15} onClick={addNewVitalThreshold}>Add new vital</Button>
           </ModalBody>
           <ModalFooter>
             <Button onClick={disclosure.onClose} mr={3}>Dismiss</Button>

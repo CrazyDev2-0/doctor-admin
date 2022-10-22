@@ -77,12 +77,12 @@ const PatientListPage = () => {
         <div className="header">
           <p>Patient Database</p>
           <HStack>
-            <Button
+            {/* <Button
               onClick={modalUseDisclosureForSearchModal.onOpen}
               colorScheme="teal"
             >
               Search
-            </Button>
+            </Button> */}
             <Button
               onClick={modalUseDisclosureForNewPatientModal.onOpen}
               colorScheme="teal"
