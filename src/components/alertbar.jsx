@@ -25,7 +25,8 @@ const AlertBar = ()=>{
               }
         });
         console.log(data.data.payload);
-        setNotif(data.data.payload);        
+        let tmp =  data.data.payload.reverse();
+        setNotif(tmp);        
     } 
     useEffect(() => {
         getOldAlerts();
@@ -34,11 +35,12 @@ const AlertBar = ()=>{
         onMessage(messaging, function (payload) {
         console.log('Message received. ', payload);
         let tmp = notif;
-        tmp.push(payload);
-        setNotif( [...tmp] );
+        const res = JSON.parse(payload.data.payload);
+        // tmp.splice( 0, 0, res );
+        setNotif( [res, ...tmp] );
         forceUpdate();
         // setNotif([...notif, payload]);
-        // console.log(tmp);
+        console.log(res);
         });
     }, []);
 
