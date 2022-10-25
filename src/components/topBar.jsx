@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import logo from "../assets/logo.jpg";
-import { faBars, faBell} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell, faSignOut} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   IconButton,
@@ -16,12 +16,11 @@ const TopBar = () => {
   return (
     <>
       <div className="topBar">
-        {/* <IconButton
+        <IconButton
           aria-label="Open navbar"
-          onClick={() => document.openNavbar()}
-          icon={<FontAwesomeIcon icon={faBars} fontSize="20" />}
-        /> */}
-        <a></a>
+          onClick={() => {localStorage.clear();window.location.href = '/';}}
+          icon={<FontAwesomeIcon icon={faSignOut} fontSize="20" />}
+        />
 
         <NavLink to="/">      
           <div className="branding">

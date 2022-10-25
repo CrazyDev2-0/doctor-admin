@@ -20,9 +20,7 @@ const PatientStatsPage = () => {
   const [vitalInfo, setVitalInfo] = useState([]);
   const [patient, setPatient] = useState({})
   const { id } = useParams();
-  const functionCallbackRef = useRef({
-
-  });
+  const functionCallbackRef = useRef({ });
   useEffect(() => { getPatient(id); }, [id]);
 
   const getPatient = async (id) => {
@@ -65,6 +63,7 @@ const PatientStatsPage = () => {
     }
   }
 
+  const getEle = (str) => vitalInfo.find(e => e.code === str);
 
   useEffect(() => { 
     document.showLoadingScreen();
@@ -111,10 +110,10 @@ const PatientStatsPage = () => {
         {
             vitalInfo.length > 0 ? 
             <div className="content">
-              <Drawchart vital = {vitalInfo[0]} functionRef={functionCallbackRef} />
-              <Drawchart vital = {vitalInfo[3]} functionRef={functionCallbackRef} />
-              <Drawchart vital = {vitalInfo[4]} functionRef={functionCallbackRef} />
-              <Drawchart vital = {vitalInfo[3]} functionRef={functionCallbackRef} />
+              <Drawchart vital = {getEle('hr')} functionRef={functionCallbackRef} />
+              <Drawchart vital = {getEle('spo2')} functionRef={functionCallbackRef} />
+              <Drawchart vital = {getEle('temperature')} functionRef={functionCallbackRef} />
+              <Drawchart vital = {getEle('steps_walked')} functionRef={functionCallbackRef} />
             </div>
             : ""
           }

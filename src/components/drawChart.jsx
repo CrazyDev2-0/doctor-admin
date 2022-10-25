@@ -8,25 +8,7 @@ const BASEURL = 'https://42ca-103-211-134-133.in.ngrok.io';
 const Drawchart = ({vital, functionRef}) => {  
   const { id } = useParams();
 
-  const refresh = async () => {
-    console.log('refresh'+vital.code);
-    const data = await axios({
-      method: 'get',
-      url: `${BASEURL}/doctor/patients/data/new/${vital.code}/${id}`,
-      headers: { 
-          'authorization': localStorage.getItem('token')
-        }
-    });
-    let tmp1 = (data.data.payload).map(elem => elem.val);
-    let tmp2 = (data.data.payload).map(elem => {
-      let myDate = new Date(elem.timestamp * 1000);
-      return myDate.toLocaleTimeString().substring(0,5);
-    });    
-    tmp1.reverse();
-    tmp2.reverse();
-    setValues([...values, ...tmp1]);  
-    setLabels([...values, ...tmp2]);
-  }
+
   const options = {
     responsive: true,
     plugins: {
@@ -42,6 +24,36 @@ const Drawchart = ({vital, functionRef}) => {
   
   const [labels, setLabels] = useState([]);
   const [values, setValues] = useState([]);
+
+  const refresh = async () => {
+    const data = await axios({
+      method: 'get',
+      url: `${BASEURL}/doctor/patients/data/new/${vital.code}/${id}?t=${functionRef.current[`${vital.code}_lg`]}`,
+      headers: { 
+          'authorization': localStorage.getItem('token')
+        }
+    });
+    let lg = 0;
+    let tmp1 = (data.data.payload).map(elem => elem.val);
+    let tmp2 = (data.data.payload).map(elem => {
+      if(elem.timestamp > lg && elem.timestamp > 0)  lg = elem.timestamp;
+      let myDate = new Date(elem.timestamp * 1000);
+      return myDate.toLocaleTimeString().substring(0,5);
+    });  
+    tmp1.reverse();
+    tmp2.reverse();
+
+    const previousValues = functionRef.current[`${vital.code}_values`];
+    const previousLabels = functionRef.current[`${vital.code}_labels`];
+    functionRef.current[`${vital.code}_lg`] = lg;
+
+    setValues([...previousValues, ...tmp1]);  
+    setLabels([...previousLabels, ...tmp2]);
+
+    functionRef.current[`${vital.code}_values`] = [...previousValues, ...tmp1];
+    functionRef.current[`${vital.code}_labels`] = [...previousLabels, ...tmp2];
+  }
+  
   const getOldVital = async (id, vitalCode) => {
     const data = await axios({
         method: 'get',
@@ -52,8 +64,10 @@ const Drawchart = ({vital, functionRef}) => {
     });
     // console.log(id);
     // console.log("VITALSDATA", data.data.payload); 
+    let lg = 0;
     let tmp1 = (data.data.payload).map(elem => elem.val);
     let tmp2 = (data.data.payload).map(elem => {
+      if(elem.timestamp > lg && elem.timestamp > 0)  lg = elem.timestamp;
       let myDate = new Date(elem.timestamp * 1000);
       // console.log(myDate.toLocaleTimeString());
       return myDate.toLocaleTimeString().substring(0,5);
@@ -63,10 +77,16 @@ const Drawchart = ({vital, functionRef}) => {
     tmp2.reverse();
     setValues(tmp1);  
     setLabels(tmp2);
+
+    functionRef.current[`${vital.code}_values`] = tmp1;
+    functionRef.current[`${vital.code}_labels`] = tmp2;
+    functionRef.current[`${vital.code}_lg`] = lg;
   } 
   
   useEffect(() => {
     functionRef.current[`${vital.code}`] = refresh;
+    functionRef.current[`${vital.code}_labels`] = labels;
+    functionRef.current[`${vital.code}_values`] = values;
      getOldVital(id, vital.code); 
     }, []);  
   
@@ -74,7 +94,7 @@ const Drawchart = ({vital, functionRef}) => {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
+        label: vital.code,
         data: values,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",

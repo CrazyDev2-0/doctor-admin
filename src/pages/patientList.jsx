@@ -28,7 +28,7 @@ const PatientListPage = () => {
   const modalUseDisclosureForNewPatientModal = useDisclosure();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(5);
+  const [totalPages, setTotalPages] = useState(1);
   const [patients, setPatients] = useState([]);
 
   const formRef = React.useRef({
