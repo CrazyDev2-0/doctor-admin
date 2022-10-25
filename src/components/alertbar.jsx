@@ -1,10 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { IconButton } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AlertBarElement from "./alertbar_element";
 
+import firebaseapp from '../firebase'
+import { getMessaging, onMessage } from "firebase/messaging";
+import axios from "axios";
+    
+
+const BASEURL = 'https://42ca-103-211-134-133.in.ngrok.io';
 const AlertBar = ()=>{
+
+    const [notif, setNotif] = useState([]);
+
+    const [_, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
+    const getOldAlerts = async () => {
+        const data = await axios({
+            method: 'get',
+            url: `${BASEURL}/doctor/alert`,
+            headers: { 
+                'authorization': localStorage.getItem('token')
+              }
+        });
+        console.log(data.data.payload);
+        setNotif(data.data.payload);        
+    } 
+    useEffect(() => {
+        getOldAlerts();
+        const messaging = getMessaging(firebaseapp);
+
+        onMessage(messaging, function (payload) {
+        console.log('Message received. ', payload);
+        let tmp = notif;
+        tmp.push(payload);
+        setNotif( [...tmp] );
+        forceUpdate();
+        // setNotif([...notif, payload]);
+        // console.log(tmp);
+        });
+    }, []);
+
+    console.log("NOTIF", notif);
 
     return(
     <>
@@ -15,26 +53,9 @@ const AlertBar = ()=>{
         </div>
         <div className="divider"></div>
         <div className="alertBarContent">
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
-            <AlertBarElement/>
+            {
+                notif.map( elem => <AlertBarElement alrt={ elem }/>)
+            }
         </div>
     </div>
     </>);

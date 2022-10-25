@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Line } from "react-chartjs-2";
 
-const BASEURL = 'https://d2a6-103-171-246-169.in.ngrok.io';
+const BASEURL = 'https://42ca-103-211-134-133.in.ngrok.io';
 
 const Drawchart = ({vital, functionRef}) => {  
   const { id } = useParams();

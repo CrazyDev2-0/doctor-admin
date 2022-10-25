@@ -3,30 +3,47 @@ import logo from "../assets/logo.jpg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-//  Completely built on custom CSS
-// To modify check _loginPage.scss
+import { getToken, getMessaging } from "firebase/messaging";
+import firebaseapp from "../firebase";
 
-const BASEURL = 'https://d2a6-103-171-246-169.in.ngrok.io';
+const requestPermission = async () => {
+  console.log('Requesting permission...');
+  try {    
+    if ((await Notification.requestPermission()) == 'granted') {      
+      const messaging = getMessaging(firebaseapp);
+      const fcmToken = await getToken(messaging, { vapidKey: 'BLVY-Cc28TMBaAYYF-7OhMhvkDWx9HuEprqwWg-PSwUB9FGlBzL0oPcrWg09ZK4tWswiAIUnMdCj_tCDAn8CvcI' });
+      
+      if(fcmToken)  return fcmToken;
+    }
+  } catch (error) {
+    console.log("error in fcmtoken generation", error)
+  }
+  return null;  
+}
+
+const BASEURL = 'https://42ca-103-211-134-133.in.ngrok.io';
 const LoginPage = () => {
   const navigate = useNavigate();
   // Login form state
   const formRef = useRef({
     email: "",
-    password: "",
+    password: ""
   });
 
 
   // Handle login form submit
-  async function handleSubmit() {
+  async function handleSubmit() {    
+    const fcmtoken = await requestPermission();
+    if(fcmtoken)  {
+      formRef.current["fcmToken"] = fcmtoken;
+    }
     const data = await axios({
       method: 'post',
       url: `${BASEURL}/auth/login-doctor`,
       headers: { 
         'Content-Type': 'application/json'
       },
-      data : JSON.stringify({
-        "email": formRef.current.email
-      })
+      data : JSON.stringify(formRef.current)
     });
     // console.log(data.data.code);
     if(data.data.code === 200)  {   

@@ -23,6 +23,7 @@ import TopBar from './components/topBar';
 import AlertBar from './components/alertbar';
 import PatientStatsPage from './pages/patientStats';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -35,6 +36,8 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+
 
 root.render(
   localStorage.getItem('token') === null || localStorage.getItem('token') === undefined ? <React.StrictMode>

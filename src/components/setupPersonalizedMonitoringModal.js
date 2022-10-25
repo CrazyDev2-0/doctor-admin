@@ -20,7 +20,7 @@ import {
 
 import Swal from "sweetalert2";
 
-const BASEURL = 'https://d2a6-103-171-246-169.in.ngrok.io';
+const BASEURL = 'https://42ca-103-211-134-133.in.ngrok.io';
 
 const SetupPersonalizedMonitoringModal = ({ patientId, disclosure }) => {
   const [allDiseases, setAllDiseases] = useState([]);
@@ -139,6 +139,11 @@ const SetupPersonalizedMonitoringModal = ({ patientId, disclosure }) => {
       
     } catch (error) {
       console.log(error);
+      Swal.fire(
+        "Error",
+        "Some error occured...",
+        "error"
+      )
       document.hideLoadingScreen();
     }
   }

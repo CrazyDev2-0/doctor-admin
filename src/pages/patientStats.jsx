@@ -3,28 +3,18 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
   HStack,
-  IconButton,
   Button,
   useDisclosure,
   Text,
 } from "@chakra-ui/react";
 import { RepeatIcon, AddIcon } from "@chakra-ui/icons";
 
-import PatientSearchModal from "../components/patientSearchModal";
-import PatientAccessRequestModal from "../components/patientAccessRequest";
 import Drawchart from "../components/drawChart";
 import SetupPersonalizedMonitoringModal from "../components/setupPersonalizedMonitoringModal";
 
 const PatientStatsPage = () => {
-  const BASEURL = 'https://d2a6-103-171-246-169.in.ngrok.io';
+  const BASEURL = 'https://42ca-103-211-134-133.in.ngrok.io';
   const modalUseDisclosureForSetupPersonalizeMonitoring = useDisclosure();
 
   const [vitalInfo, setVitalInfo] = useState([]);
@@ -122,9 +112,9 @@ const PatientStatsPage = () => {
             vitalInfo.length > 0 ? 
             <div className="content">
               <Drawchart vital = {vitalInfo[0]} functionRef={functionCallbackRef} />
-              <Drawchart vital = {vitalInfo[3]} functionRef={functionCallbackRef}/>
-              <Drawchart vital = {vitalInfo[4]} functionRef={functionCallbackRef}/>
-              <Drawchart vital = {vitalInfo[3]} functionRef={functionCallbackRef}/>
+              <Drawchart vital = {vitalInfo[3]} functionRef={functionCallbackRef} />
+              <Drawchart vital = {vitalInfo[4]} functionRef={functionCallbackRef} />
+              <Drawchart vital = {vitalInfo[3]} functionRef={functionCallbackRef} />
             </div>
             : ""
           }

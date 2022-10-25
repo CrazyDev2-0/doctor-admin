@@ -29,8 +29,8 @@ const PatientAccessRequestModal = ({ formRef, disclosure, requestOnClick }) => {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl >
-              <FormLabel><i>Enter userid of patient</i></FormLabel>
-              <Input placeholder="i.e ae56sdsr" onChange={(e)=>formRef.current.userid=e.target.value}></Input>              
+              <FormLabel><i>Enter email of patient</i></FormLabel>
+              <Input placeholder="i.e, patient@email.com" onChange={(e)=>formRef.current.email=e.target.value}></Input>              
             </FormControl>
           </ModalBody>
           <ModalFooter>

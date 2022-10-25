@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 
+import Swal from "sweetalert2";
 
 import {
   Table,
@@ -19,8 +20,8 @@ import PatientSearchModal from "../components/patientSearchModal";
 import PatientAccessRequestModal from "../components/patientAccessRequest";
 import { useNavigate } from "react-router-dom";
 
+const BASEURL = 'https://42ca-103-211-134-133.in.ngrok.io';
 const PatientListPage = () => {
-  const BASEURL = 'https://d2a6-103-171-246-169.in.ngrok.io';
 
   const navigate = useNavigate();
   const modalUseDisclosureForSearchModal = useDisclosure();
@@ -32,8 +33,7 @@ const PatientListPage = () => {
 
   const formRef = React.useRef({
     patientName: "",
-    userid: "",
-    filteredStudents: [],
+    email: "",
   });
 
   // Change pages
@@ -70,7 +70,41 @@ const PatientListPage = () => {
       <PatientAccessRequestModal
         disclosure={modalUseDisclosureForNewPatientModal}
         formRef={formRef}
-        requestOnClick={(e) => {}}
+        requestOnClick={async (e) => { 
+          console.log(formRef.current.email); 
+          try {
+            modalUseDisclosureForNewPatientModal.onClose();
+            const res = await axios({
+              method: 'post',
+              url: `${BASEURL}/doctor/patients/request`,
+              headers: { 
+                  'authorization': localStorage.getItem('token'), 
+                  'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({
+                  email: formRef.current.email
+                })
+            });
+            let resJSon = res.data;
+            modalUseDisclosureForNewPatientModal.onClose();
+            document.hideLoadingScreen()
+            Swal.fire(
+              resJSon.success ? "Successfully Sent " : "Error",
+              resJSon.message,
+              resJSon.success ? 'success' : "error"
+            )
+            
+          } catch (error) {
+            console.log(error);
+            Swal.fire(
+              "Error",
+              "Email not found",
+              "error"
+            )
+            document.hideLoadingScreen();
+          }
+          
+        }}
       />
 
       <div className="patientListResult">
