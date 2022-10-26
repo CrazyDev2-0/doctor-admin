@@ -14,7 +14,7 @@ import Drawchart from "../components/drawChart";
 import SetupPersonalizedMonitoringModal from "../components/setupPersonalizedMonitoringModal";
 
 const PatientStatsPage = () => {
-  const BASEURL = 'https://42ca-103-211-134-133.in.ngrok.io';
+  const BASEURL = 'https://www.stratathonapi.tanmoy.codes';
   const modalUseDisclosureForSetupPersonalizeMonitoring = useDisclosure();
 
   const [vitalInfo, setVitalInfo] = useState([]);

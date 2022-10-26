@@ -20,7 +20,7 @@ import {
 
 import Swal from "sweetalert2";
 
-const BASEURL = 'https://42ca-103-211-134-133.in.ngrok.io';
+const BASEURL = 'https://www.stratathonapi.tanmoy.codes';
 
 const SetupPersonalizedMonitoringModal = ({ patientId, disclosure }) => {
   const [allDiseases, setAllDiseases] = useState([]);

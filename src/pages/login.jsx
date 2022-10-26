@@ -21,7 +21,7 @@ const requestPermission = async () => {
   return null;  
 }
 
-const BASEURL = 'https://42ca-103-211-134-133.in.ngrok.io';
+const BASEURL = 'https://www.stratathonapi.tanmoy.codes';
 const LoginPage = () => {
   const navigate = useNavigate();
   // Login form state
@@ -91,8 +91,10 @@ const LoginPage = () => {
             </div>
             <button className="loginBtn" onClick={() => handleSubmit()}>
               Login
+            </button>            
+            <button className="loginBtn" onClick={() => { window.location.href = '/forpass' } }>
+              Forgot Password
             </button>
-
           </div>
           <div className="left">
             <div className="glasspanel">
