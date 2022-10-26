@@ -20,7 +20,7 @@ import {
 
 import Swal from "sweetalert2";
 
-const BASEURL = 'https://www.stratathonapi.tanmoy.codes';
+const BASEURL = 'https://stratathonapi.tanmoy.codes';
 
 const SetupPersonalizedMonitoringModal = ({ patientId, disclosure }) => {
   const [allDiseases, setAllDiseases] = useState([]);
@@ -139,12 +139,12 @@ const SetupPersonalizedMonitoringModal = ({ patientId, disclosure }) => {
       
     } catch (error) {
       console.log(error);
+      document.hideLoadingScreen();
       Swal.fire(
         "Error",
         "Some error occured...",
         "error"
       )
-      document.hideLoadingScreen();
     }
   }
 

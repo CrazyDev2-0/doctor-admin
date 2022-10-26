@@ -17,6 +17,7 @@ import "./sass/dashboard.scss";
 
 // Pages
 import LoginPage from './pages/login';
+import ForPass from './pages/forgotPass';
 import PatientListPage from './pages/patientList';
 import Navbar from './components/navbar';
 import TopBar from './components/topBar';
@@ -40,11 +41,13 @@ ChartJS.register(
 
 
 root.render(
-  localStorage.getItem('token') === null || localStorage.getItem('token') === undefined ? <React.StrictMode>
+  localStorage.getItem('token') === null || localStorage.getItem('token') === undefined ? 
+  <React.StrictMode>
     <ChakraProvider>
       <BrowserRouter>
         <Routes>
         <Route path="/*" element={<LoginPage />} replace />
+        <Route path="/forpass*" element={<ForPass />} replace />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

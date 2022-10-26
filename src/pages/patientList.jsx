@@ -20,7 +20,7 @@ import PatientSearchModal from "../components/patientSearchModal";
 import PatientAccessRequestModal from "../components/patientAccessRequest";
 import { useNavigate } from "react-router-dom";
 
-const BASEURL = 'https://www.stratathonapi.tanmoy.codes';
+const BASEURL = 'https://stratathonapi.tanmoy.codes';
 const PatientListPage = () => {
 
   const navigate = useNavigate();

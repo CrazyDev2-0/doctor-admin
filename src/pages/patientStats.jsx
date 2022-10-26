@@ -14,7 +14,7 @@ import Drawchart from "../components/drawChart";
 import SetupPersonalizedMonitoringModal from "../components/setupPersonalizedMonitoringModal";
 
 const PatientStatsPage = () => {
-  const BASEURL = 'https://www.stratathonapi.tanmoy.codes';
+  const BASEURL = 'https://stratathonapi.tanmoy.codes';
   const modalUseDisclosureForSetupPersonalizeMonitoring = useDisclosure();
 
   const [vitalInfo, setVitalInfo] = useState([]);

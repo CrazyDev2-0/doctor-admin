@@ -8,7 +8,7 @@ import firebaseapp from "../firebase";
 import { getMessaging, onMessage } from "firebase/messaging";
 import axios from "axios";
 
-const BASEURL = "https://www.stratathonapi.tanmoy.codes";
+const BASEURL = "https://stratathonapi.tanmoy.codes";
 const AlertBar = () => {
   const notif = useRef([]);
 

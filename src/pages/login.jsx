@@ -21,7 +21,7 @@ const requestPermission = async () => {
   return null;  
 }
 
-const BASEURL = 'https://www.stratathonapi.tanmoy.codes';
+const BASEURL = 'https://stratathonapi.tanmoy.codes';
 const LoginPage = () => {
   const navigate = useNavigate();
   // Login form state

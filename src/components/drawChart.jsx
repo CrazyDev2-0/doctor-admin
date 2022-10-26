@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Line } from "react-chartjs-2";
 
-const BASEURL = 'https://www.stratathonapi.tanmoy.codes';
+const BASEURL = 'https://stratathonapi.tanmoy.codes';
 
 const Drawchart = ({vital, functionRef}) => {  
   const { id } = useParams();
