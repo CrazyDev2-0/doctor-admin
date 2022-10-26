@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import logo from "../assets/logo.jpg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import { getToken, getMessaging } from "firebase/messaging";
 import firebaseapp from "../firebase";
@@ -52,6 +53,11 @@ const LoginPage = () => {
       window.location.href="/";
       // navigate("/", {replace: true});
     }else {
+      Swal.fire(
+        "Error",
+        "Invalid Login credentials...",
+        "error"
+      )
       console.log("Incorrect Login Credentials");
     }
   }

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Line } from "react-chartjs-2";
 
 const BASEURL = 'https://stratathonapi.tanmoy.codes';
+const CHARTSIZE = 50;
 
 const Drawchart = ({vital, functionRef}) => {  
   const { id } = useParams();
@@ -26,6 +27,7 @@ const Drawchart = ({vital, functionRef}) => {
   const [values, setValues] = useState([]);
 
   const refresh = async () => {
+    console.log("refresh in drawChart");
     const data = await axios({
       method: 'get',
       url: `${BASEURL}/doctor/patients/data/new/${vital.code}/${id}?t=${functionRef.current[`${vital.code}_lg`]}`,
@@ -33,6 +35,9 @@ const Drawchart = ({vital, functionRef}) => {
           'authorization': localStorage.getItem('token')
         }
     });
+    // console.log(data.data.payload);
+    if(data.data.payload.length == 0) return;
+
     let lg = 0;
     let tmp1 = (data.data.payload).map(elem => elem.val);
     let tmp2 = (data.data.payload).map(elem => {
@@ -43,9 +48,20 @@ const Drawchart = ({vital, functionRef}) => {
     tmp1.reverse();
     tmp2.reverse();
 
-    const previousValues = functionRef.current[`${vital.code}_values`];
-    const previousLabels = functionRef.current[`${vital.code}_labels`];
-    functionRef.current[`${vital.code}_lg`] = lg;
+    let previousValues = functionRef.current[`${vital.code}_values`];
+    let previousLabels = functionRef.current[`${vital.code}_labels`];
+    functionRef.current[`${vital.code}_lg`] = lg+1;
+    
+    const tmpsz = tmp1.length;
+    // y|x=BS-n => y-(BS-n)
+    if(tmpsz >= CHARTSIZE) {
+      previousLabels = [];
+      previousValues = [];
+    }else {
+      const d = previousLabels.length - (CHARTSIZE-tmpsz);
+      previousLabels.splice(0, d);
+      previousValues.splice(0, d);
+    }
 
     setValues([...previousValues, ...tmp1]);  
     setLabels([...previousLabels, ...tmp2]);
@@ -57,7 +73,7 @@ const Drawchart = ({vital, functionRef}) => {
   const getOldVital = async (id, vitalCode) => {
     const data = await axios({
         method: 'get',
-        url: `${BASEURL}/doctor/patients/data/old/${vitalCode}/${id}`,
+        url: `${BASEURL}/doctor/patients/data/old/${vitalCode}/${id}?p=${CHARTSIZE}`,
         headers: { 
             'authorization': localStorage.getItem('token')
           }
@@ -75,12 +91,13 @@ const Drawchart = ({vital, functionRef}) => {
     });    
     tmp1.reverse();
     tmp2.reverse();
+    
     setValues(tmp1);  
     setLabels(tmp2);
 
     functionRef.current[`${vital.code}_values`] = tmp1;
     functionRef.current[`${vital.code}_labels`] = tmp2;
-    functionRef.current[`${vital.code}_lg`] = lg;
+    functionRef.current[`${vital.code}_lg`] = lg+1;
   } 
   
   useEffect(() => {
