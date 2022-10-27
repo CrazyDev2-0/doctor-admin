@@ -35,7 +35,7 @@ const PatientSearchModal = ({ formRef, disclosure, searchPatientOnClick }) => {
           </ModalBody>
           <ModalFooter>
             <Button onClick={disclosure.onClose} mr={3}>Dismiss</Button>
-            <Button colorScheme="teal" onClick={searchPatientOnClick} >Search Patient</Button>
+            <Button colorScheme="orange" onClick={searchPatientOnClick} >Search Patient</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

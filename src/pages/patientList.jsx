@@ -113,13 +113,13 @@ const PatientListPage = () => {
           <HStack>
             {/* <Button
               onClick={modalUseDisclosureForSearchModal.onOpen}
-              colorScheme="teal"
+              colorScheme="orange"
             >
               Search
             </Button> */}
             <Button
               onClick={modalUseDisclosureForNewPatientModal.onOpen}
-              colorScheme="teal"
+              colorScheme="orange"
             >
               Add New Patient
             </Button>
@@ -146,12 +146,12 @@ const PatientListPage = () => {
                   <Td>{patient.profile.age}</Td>
                   <Td>{patient.profile.gender}</Td>
                   <Td>
-                    <Button size="xs" colorScheme="teal">
+                    <Button size="xs" colorScheme="orange">
                       {patient.email}
                     </Button>
                   </Td>
                   <Td>
-                    <Button size="xs" colorScheme="teal" onClick={() => {navigate(`/patients/${patient.id}`, {replace: false});}}>
+                    <Button size="xs" colorScheme="orange" onClick={() => {navigate(`/patients/${patient.id}`, {replace: false});}}>
                       View Stats
                     </Button>
                   </Td>
@@ -167,31 +167,31 @@ const PatientListPage = () => {
           </p>
           <HStack width="fit-content">
             {/* <IconButton
-              colorScheme="teal"
+              colorScheme="orange"
               size="sm"
               icon={<FontAwesomeIcon icon={faAnglesLeft} />}
             /> */}
             {/* <IconButton
-              colorScheme="teal"
+              colorScheme="orange"
               size="sm"
               icon={<FontAwesomeIcon icon={faAngleLeft} />}
             /> */}
             {[...Array(totalPages)].map((value, index) => (
               <IconButton
                 key={index}
-                colorScheme="teal"
+                colorScheme="orange"
                 size="sm"
                 onClick={() => goToAPage(index + 1)}
                 icon={<p>{(index + 1).toString()}</p>}
               />
             ))}
             {/* <IconButton
-              colorScheme="teal"
+              colorScheme="orange"
               size="sm"
               icon={<FontAwesomeIcon icon={faAngleRight} />}
             /> */}
             {/* <IconButton
-              colorScheme="teal"
+              colorScheme="orange"
               size="sm"
               icon={<FontAwesomeIcon icon={faAnglesRight} />}
             /> */}

@@ -221,7 +221,7 @@ const SetupPersonalizedMonitoringModal = ({ patientId, disclosure }) => {
           </ModalBody>
           <ModalFooter>
             <Button onClick={disclosure.onClose} mr={3}>Dismiss</Button>
-            <Button colorScheme="teal" onClick={submitForm}>Submit</Button>
+            <Button colorScheme="orange" onClick={submitForm}>Submit</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

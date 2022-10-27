@@ -35,7 +35,7 @@ const PatientAccessRequestModal = ({ formRef, disclosure, requestOnClick }) => {
           </ModalBody>
           <ModalFooter>
             <Button onClick={disclosure.onClose} mr={3}>Dismiss</Button>
-            <Button colorScheme="teal" onClick={requestOnClick} >Submit Request</Button>
+            <Button colorScheme="orange" onClick={requestOnClick} >Submit Request</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

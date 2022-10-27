@@ -113,11 +113,11 @@ const PatientStatsPage = () => {
             </HStack>
           </HStack>
           <HStack>
-            <Button colorScheme="teal" onClick={modalUseDisclosureForSetupPersonalizeMonitoring.onOpen}>
+            <Button colorScheme="orange" onClick={modalUseDisclosureForSetupPersonalizeMonitoring.onOpen}>
                 <AddIcon />
                 &nbsp;&nbsp;&nbsp;Setup New Monitoring
             </Button>
-            <Button colorScheme="teal" onClick={refreshVitals}>
+            <Button colorScheme="orange" onClick={refreshVitals}>
                 <RepeatIcon />
                 &nbsp;&nbsp;&nbsp;Refresh
             </Button>

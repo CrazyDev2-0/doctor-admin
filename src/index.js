@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -38,6 +38,11 @@ ChartJS.register(
   Legend
 );
 
+const theme = extendTheme({
+  colors:{
+    
+  }
+})
 
 
 root.render(
