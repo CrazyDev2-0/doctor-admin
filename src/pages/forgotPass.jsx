@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo_light.png";
 import axios from "axios";
 import Swal from "sweetalert2";
 

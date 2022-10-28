@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo.png";
 import { faBars, faBell, faSignOut} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -25,7 +25,7 @@ const TopBar = () => {
         <NavLink to="/">      
           <div className="branding">
             <img src={logo} alt="logo" />
-            <p>Vital Monitoring</p>
+            <p>MeFit - Doctor portal</p>
           </div>
         </NavLink>
         <IconButton

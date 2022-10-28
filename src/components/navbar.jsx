@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo.png";
 import NavbarElement from "../components/navbar_element";
 import { faPerson, faGear,  faClose, faHome } from '@fortawesome/free-solid-svg-icons'
 import { IconButton } from "@chakra-ui/react";
